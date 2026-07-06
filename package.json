@@ -1,0 +1,13 @@
+{
+  "name": "yojana-setu-agent",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Daily agent that finds new Indian government schemes and commits them to schemes.json",
+  "scripts": {
+    "start": "node agent.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

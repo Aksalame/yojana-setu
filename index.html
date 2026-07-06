@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yojana Setu — Find Your Government Scheme</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1C2B39; --navy-deep:#101B24; --sand:#F6F1E7; --sand-dark:#EDE5D3;
+    --saffron:#E08E3E; --teal:#2F6F5E; --terracotta:#B5533C; --ink:#26221B; --line:#D8CFB8;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--sand);color:var(--ink);font-family:'Inter',sans-serif;}
+  h1,h2,h3{font-family:'Fraunces',serif;margin:0;}
+  header{background:var(--navy-deep);color:var(--sand);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20;border-bottom:3px solid var(--saffron);}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .mark{width:34px;height:34px;border-radius:50%;border:2px solid var(--saffron);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:700;color:var(--saffron);}
+  .brand-name{font-family:'Fraunces',serif;font-size:19px;}
+  .brand-sub{font-size:11px;opacity:0.65;letter-spacing:1px;text-transform:uppercase;}
+  nav button{background:none;border:1px solid rgba(246,241,231,0.3);color:var(--sand);padding:7px 14px;border-radius:3px;font-size:13px;cursor:pointer;}
+  nav button:hover{border-color:var(--saffron);color:var(--saffron);}
+  .hero{max-width:920px;margin:0 auto;padding:56px 24px 20px;}
+  .eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--terracotta);font-weight:600;margin-bottom:12px;}
+  .hero h1{font-size:44px;line-height:1.12;font-weight:600;max-width:680px;}
+  .hero p{font-size:16px;line-height:1.6;max-width:560px;color:#4A4335;margin-top:14px;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px 80px;}
+  .agent-strip{display:flex;align-items:center;gap:10px;background:var(--navy-deep);color:var(--sand);padding:10px 18px;border-radius:4px;font-size:12.5px;margin-top:26px;flex-wrap:wrap;}
+  .agent-dot{width:8px;height:8px;border-radius:50%;background:#6FA98A;flex-shrink:0;}
+  .agent-dot.err{background:var(--terracotta);}
+  .agent-strip b{color:var(--saffron);}
+  .form-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:32px;margin-top:20px;position:relative;}
+  .form-card::before{content:"CITIZEN INTAKE FORM";position:absolute;top:-11px;left:28px;background:var(--sand);padding:0 10px;font-size:11px;letter-spacing:1.5px;color:var(--navy);font-weight:600;font-family:'JetBrains Mono',monospace;}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 24px;margin-top:8px;}
+  @media(max-width:640px){.field-grid{grid-template-columns:1fr;} .hero h1{font-size:32px;}}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  .field label{font-size:12px;font-weight:600;letter-spacing:0.4px;color:#5A5342;text-transform:uppercase;}
+  .field input,.field select{border:none;border-bottom:2px solid var(--line);background:transparent;padding:8px 2px;font-size:15px;color:var(--ink);}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--teal);}
+  .submit-row{margin-top:28px;display:flex;align-items:center;gap:16px;}
+  .btn-primary{background:var(--navy-deep);color:var(--sand);border:none;padding:13px 26px;border-radius:3px;font-size:14px;font-weight:600;cursor:pointer;}
+  .btn-primary:hover{background:var(--teal);}
+  .btn-ghost{background:none;border:1px solid var(--line);padding:12px 20px;border-radius:3px;font-size:13px;cursor:pointer;color:#5A5342;}
+  .results-head{display:flex;align-items:center;justify-content:space-between;margin-top:52px;margin-bottom:18px;flex-wrap:wrap;gap:12px;}
+  .seal{width:74px;height:74px;border-radius:50%;border:3px double var(--teal);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--teal);transform:rotate(-8deg);flex-shrink:0;}
+  .seal .num{font-family:'Fraunces',serif;font-size:24px;font-weight:700;line-height:1;}
+  .seal .lbl{font-size:8px;letter-spacing:1px;text-transform:uppercase;}
+  .results-title{display:flex;align-items:center;gap:16px;}
+  .search-row{display:flex;gap:10px;margin-top:6px;}
+  .search-row input{flex:1;padding:10px 14px;border:1px solid var(--line);border-radius:3px;font-size:14px;background:#fff;}
+  .scheme-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:22px 24px;margin-bottom:14px;border-left:4px solid var(--line);}
+  .scheme-card.match{border-left-color:var(--teal);}
+  .scheme-card.partial{border-left-color:var(--saffron);}
+  .scheme-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;}
+  .scheme-name{font-family:'Fraunces',serif;font-size:19px;font-weight:600;}
+  .tag{font-size:10px;letter-spacing:0.8px;text-transform:uppercase;padding:4px 9px;border-radius:20px;font-weight:600;white-space:nowrap;}
+  .tag.eligible{background:#E4EFEA;color:var(--teal);}
+  .tag.partial{background:#FBEADB;color:var(--saffron);}
+  .tag.category{background:var(--sand-dark);color:#5A5342;margin-right:6px;}
+  .tag.agent{background:#E7EEF5;color:#35618A;margin-left:6px;}
+  .scheme-desc{font-size:14px;color:#4A4335;line-height:1.55;margin-top:8px;}
+  .scheme-meta{font-size:12.5px;color:#7A715C;margin-top:10px;line-height:1.7;}
+  .scheme-meta b{color:#4A4335;}
+  .scheme-link{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--navy-deep);text-decoration:none;border-bottom:2px solid var(--saffron);padding-bottom:1px;}
+  .scheme-link:hover{color:var(--terracotta);}
+  .empty{padding:30px;text-align:center;color:#8A8168;font-size:14px;border:1px dashed var(--line);border-radius:4px;}
+  footer{text-align:center;padding:30px;font-size:12px;color:#8A8168;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="mark">यो</div>
+    <div><div class="brand-name">Yojana Setu</div><div class="brand-sub">Scheme Bridge · Citizen Portal</div></div>
+  </div>
+  <nav><button onclick="document.getElementById('form-anchor').scrollIntoView({behavior:'smooth'})">Check Eligibility</button></nav>
+</header>
+
+<div class="hero">
+  <div class="eyebrow">National Scheme Discovery</div>
+  <h1>Find the government schemes you already qualify for.</h1>
+  <p>Answer a few questions once. See every central scheme you're eligible for, with the criteria that matched and a direct link to apply.</p>
+</div>
+
+<div class="wrap">
+  <div class="agent-strip">
+    <div class="agent-dot" id="agentDot"></div>
+    <span id="agentStatusText">Loading agent status…</span>
+  </div>
+
+  <div class="form-card" id="form-anchor">
+    <div class="field-grid">
+      <div class="field"><label>Age</label><input type="number" id="f_age" placeholder="e.g. 34"></div>
+      <div class="field"><label>Gender</label><select id="f_gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+      <div class="field"><label>Annual family income (₹)</label><input type="number" id="f_income" placeholder="e.g. 250000"></div>
+      <div class="field"><label>State / UT</label><input type="text" id="f_state" placeholder="e.g. Maharashtra"></div>
+      <div class="field"><label>Social category</label><select id="f_category"><option value="">Select</option><option>General</option><option>OBC</option><option>SC</option><option>ST</option></select></div>
+      <div class="field"><label>Occupation / status</label>
+        <select id="f_occupation">
+          <option value="">Select</option><option>Farmer</option><option>Student</option><option>Unemployed</option>
+          <option>Self-employed / Business</option><option>Salaried</option><option>Senior citizen</option>
+          <option>Artisan / Craftsperson</option><option>Unorganized sector worker</option>
+        </select>
+      </div>
+      <div class="field"><label>Person with disability?</label><select id="f_disability"><option value="No">No</option><option value="Yes">Yes</option></select></div>
+      <div class="field"><label>Girl child in household?</label><select id="f_girlchild"><option value="No">No</option><option value="Yes">Yes</option></select></div>
+    </div>
+    <div class="submit-row">
+      <button class="btn-primary" onclick="runMatch()">Check my eligible schemes</button>
+      <button class="btn-ghost" onclick="clearForm()">Clear</button>
+    </div>
+  </div>
+
+  <div class="results-head">
+    <div class="results-title">
+      <div class="seal"><div class="num" id="matchCount">–</div><div class="lbl">Matched</div></div>
+      <div><h2 style="font-size:22px;">Your results</h2><div style="font-size:13px;color:#7A715C;">Fill the form above, or browse everything below.</div></div>
+    </div>
+  </div>
+
+  <div class="search-row"><input type="text" id="keyword" placeholder="Or search by keyword — e.g. 'farmer', 'scholarship', 'housing'" oninput="renderList()"></div>
+  <div id="results" style="margin-top:20px;"></div>
+</div>
+
+<footer>
+  Scheme data is refreshed automatically by a scheduled agent. Always confirm final eligibility on the official link shown, or via <a href="https://www.myscheme.gov.in" target="_blank">myscheme.gov.in</a>.
+</footer>
+
+<script>
+const staticSchemes = [
+  {name:"PM-KISAN", cat:"Agriculture", desc:"Direct income support of ₹6,000/year to small and marginal landholding farmer families, paid in three installments.", minAge:18, maxIncome:null, gender:null, occupation:"Farmer", link:"https://pmkisan.gov.in"},
+  {name:"Ayushman Bharat – PM-JAY", cat:"Health", desc:"Health insurance cover of ₹5 lakh per family per year for secondary and tertiary hospitalisation.", minAge:null, maxIncome:250000, gender:null, occupation:null, link:"https://pmjay.gov.in"},
+  {name:"Pradhan Mantri Awas Yojana – Gramin", cat:"Housing", desc:"Financial assistance to build a pucca house for houseless and kutcha-house households in rural areas.", minAge:18, maxIncome:180000, gender:null, occupation:null, link:"https://pmayg.nic.in"},
+  {name:"Pradhan Mantri Awas Yojana – Urban", cat:"Housing", desc:"Interest subsidy and housing assistance for urban poor, EWS and LIG households.", minAge:18, maxIncome:600000, gender:null, occupation:null, link:"https://pmay-urban.gov.in"},
+  {name:"National Scholarship Portal", cat:"Education", desc:"Single-window platform for central and state scholarships for students from low-income families.", minAge:null, maxAge:35, maxIncome:250000, gender:null, occupation:"Student", link:"https://scholarships.gov.in"},
+  {name:"Sukanya Samriddhi Yojana", cat:"Women & Child", desc:"Small savings scheme for parents/guardians of a girl child, for her education and marriage expenses.", minAge:null, maxIncome:null, gender:"Female", occupation:null, girlchild:true, link:"https://www.india.gov.in/sukanya-samriddhi-yojana-ssy"},
+  {name:"Atal Pension Yojana", cat:"Social Security", desc:"Pension scheme for unorganised sector workers, guaranteeing a fixed monthly pension after age 60.", minAge:18, maxAge:40, maxIncome:null, gender:null, occupation:"Unorganized sector worker", link:"https://www.npscra.nsdl.co.in/scheme-details.php"},
+  {name:"PM Jeevan Jyoti Bima Yojana", cat:"Social Security", desc:"Renewable one-year life insurance cover of ₹2 lakh for a very low annual premium.", minAge:18, maxAge:50, maxIncome:null, gender:null, occupation:null, link:"https://jansuraksha.gov.in"},
+  {name:"PM Suraksha Bima Yojana", cat:"Social Security", desc:"Accidental death and disability insurance cover of up to ₹2 lakh at a very low annual premium.", minAge:18, maxAge:70, maxIncome:null, gender:null, occupation:null, link:"https://jansuraksha.gov.in"},
+  {name:"Stand-Up India", cat:"Business", desc:"Bank loans between ₹10 lakh and ₹1 crore for a greenfield enterprise, reserved for SC/ST and women entrepreneurs.", minAge:18, maxIncome:null, gender:null, occupation:"Self-employed / Business", categoryRestrict:["SC","ST","Woman"], link:"https://www.standupmitra.in"},
+  {name:"PM Mudra Yojana", cat:"Business", desc:"Collateral-free loans up to ₹10 lakh for non-farm micro and small enterprises.", minAge:18, maxIncome:null, gender:null, occupation:"Self-employed / Business", link:"https://www.mudra.org.in"},
+  {name:"Indira Gandhi National Old Age Pension (NSAP)", cat:"Social Security", desc:"Monthly pension for elderly persons from households living below the poverty line.", minAge:60, maxIncome:null, gender:null, occupation:"Senior citizen", link:"https://nsap.nic.in"},
+  {name:"PM Vishwakarma", cat:"Employment", desc:"Support for traditional artisans and craftspeople — skill training, toolkit incentive and collateral-free credit.", minAge:18, maxIncome:null, gender:null, occupation:"Artisan / Craftsperson", link:"https://pmvishwakarma.gov.in"},
+  {name:"Deendayal Disabled Rehabilitation Scheme", cat:"Social Security", desc:"Financial assistance to NGOs providing education, skill training and rehabilitation for persons with disabilities.", minAge:null, maxIncome:null, gender:null, occupation:null, disability:true, link:"https://disabilityaffairs.gov.in"}
+];
+
+let dynamicSchemes = [];
+let lastMatched = [];
+
+function setAgentStatus(text, mode){
+  document.getElementById('agentStatusText').innerHTML = text;
+  document.getElementById('agentDot').className = 'agent-dot' + (mode==='err' ? ' err' : '');
+}
+
+async function loadSchemesFile(){
+  try{
+    const res = await fetch('./schemes.json', {cache:'no-store'});
+    if(!res.ok) throw new Error('no schemes.json yet');
+    const data = await res.json();
+    dynamicSchemes = (data.schemes || []).map(s => ({...s, fromAgent:true}));
+    if(data.lastRun){
+      setAgentStatus(`Agent last ran <b>${data.lastRun}</b> · <b>${dynamicSchemes.length}</b> agent-added scheme(s) on file`);
+    } else {
+      setAgentStatus('Agent has not run yet — schemes.json is empty.');
+    }
+  }catch(e){
+    setAgentStatus('Could not load schemes.json (agent may not have run yet).','err');
+  }
+  renderList();
+}
+
+function allSchemes(){ return staticSchemes.concat(dynamicSchemes); }
+
+function checkMatch(s, u){
+  let checks=0, passed=0;
+  if(s.minAge!=null){checks++; if(u.age!=null && u.age>=s.minAge) passed++;}
+  if(s.maxAge!=null){checks++; if(u.age!=null && u.age<=s.maxAge) passed++;}
+  if(s.maxIncome!=null){checks++; if(u.income!=null && u.income<=s.maxIncome) passed++;}
+  if(s.gender){checks++; if(u.gender===s.gender) passed++;}
+  if(s.occupation){checks++; if(u.occupation===s.occupation) passed++;}
+  if(s.disability){checks++; if(u.disability==='Yes') passed++;}
+  if(s.girlchild){checks++; if(u.girlchild==='Yes') passed++;}
+  if(s.categoryRestrict){checks++; if(s.categoryRestrict.includes(u.category) || (s.categoryRestrict.includes('Woman') && u.gender==='Female')) passed++;}
+  if(checks===0) return {status:'info', ratio:1};
+  if(passed===checks) return {status:'match', ratio:1};
+  if(passed>0) return {status:'partial', ratio:passed/checks};
+  return {status:'no', ratio:0};
+}
+
+function metaLine(s){
+  const bits=[];
+  if(s.minAge!=null||s.maxAge!=null) bits.push(`Age ${s.minAge??'any'}–${s.maxAge??'any'}`);
+  if(s.maxIncome!=null) bits.push(`Income ≤ ₹${Number(s.maxIncome).toLocaleString('en-IN')}/yr`);
+  if(s.gender) bits.push(`Gender: ${s.gender}`);
+  if(s.occupation) bits.push(`Occupation: ${s.occupation}`);
+  if(s.disability) bits.push(`For persons with disability`);
+  if(s.girlchild) bits.push(`Household has a girl child`);
+  if(s.categoryRestrict) bits.push(`Category: ${s.categoryRestrict.join('/')}`);
+  return bits.length? bits.join(' · ') : 'No specific demographic restriction listed';
+}
+
+function getUser(){
+  return {
+    age: document.getElementById('f_age').value ? parseInt(document.getElementById('f_age').value) : null,
+    gender: document.getElementById('f_gender').value || null,
+    income: document.getElementById('f_income').value ? parseInt(document.getElementById('f_income').value) : null,
+    category: document.getElementById('f_category').value || null,
+    occupation: document.getElementById('f_occupation').value || null,
+    disability: document.getElementById('f_disability').value,
+    girlchild: document.getElementById('f_girlchild').value
+  };
+}
+
+function runMatch(){
+  const u = getUser();
+  const hasAnyInput = u.age||u.gender||u.income||u.category||u.occupation||u.disability==='Yes'||u.girlchild==='Yes';
+  if(!hasAnyInput){ lastMatched = []; renderList(); return; }
+  lastMatched = allSchemes().map(s=>({s, m:checkMatch(s,u)})).filter(x=>x.m.status!=='no');
+  lastMatched.sort((a,b)=> b.m.ratio - a.m.ratio);
+  renderList();
+}
+
+function clearForm(){
+  ['f_age','f_income','f_state'].forEach(id=>document.getElementById(id).value='');
+  ['f_gender','f_category','f_occupation'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f_disability').value='No';
+  document.getElementById('f_girlchild').value='No';
+  lastMatched = [];
+  renderList();
+}
+
+function renderList(){
+  const keyword = document.getElementById('keyword').value.trim().toLowerCase();
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+  let list, mode;
+  if(keyword){
+    mode='search';
+    list = allSchemes().filter(s => (s.name+s.desc+s.cat+(s.occupation||'')).toLowerCase().includes(keyword)).map(s=>({s, m:{status:'info'}}));
+  } else if(lastMatched.length){
+    mode='match'; list = lastMatched;
+  } else {
+    mode='all'; list = allSchemes().map(s=>({s, m:{status:'info'}}));
+  }
+  document.getElementById('matchCount').textContent = mode==='match' ? lastMatched.filter(x=>x.m.status==='match').length : '–';
+  if(!list.length){ container.innerHTML = '<div class="empty">No schemes found. Try clearing filters or a different keyword.</div>'; return; }
+  list.forEach(({s,m})=>{
+    const div = document.createElement('div');
+    div.className = 'scheme-card' + (m.status==='match'?' match':m.status==='partial'?' partial':'');
+    const tag = m.status==='match' ? '<span class="tag eligible">Likely eligible</span>' : m.status==='partial' ? '<span class="tag partial">Partial match</span>' : '';
+    div.innerHTML = `
+      <div class="scheme-top">
+        <div class="scheme-name">${s.name}</div>
+        ${tag}
+      </div>
+      <div><span class="tag category">${s.cat}</span>${s.fromAgent?'<span class="tag agent">Added by agent</span>':''}</div>
+      <div class="scheme-desc">${s.desc}</div>
+      <div class="scheme-meta"><b>Eligibility on file:</b> ${metaLine(s)}</div>
+      <a class="scheme-link" href="${s.link}" target="_blank" rel="noopener">View official scheme page →</a>
+    `;
+    container.appendChild(div);
+  });
+}
+
+loadSchemesFile();
+</script>
+</body>
+</html>
